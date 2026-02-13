@@ -12,6 +12,15 @@
     padding: 20px;
   }
 
+  .logo {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .logo img {
+    height: 80px;
+  }
+
   .form-entry {
     max-width: 900px;
     margin: auto;
@@ -86,7 +95,13 @@
 
 <body>
 
+<!-- ENTRY FORM -->
 <div class="form-entry">
+
+  <div class="logo">
+    <img src="https://via.placeholder.com/200x80?text=Company+Logo" alt="Company Logo" />
+  </div>
+
   <h3>Overtime Entry Form</h3>
 
   <label>Employee Name</label>
@@ -109,7 +124,13 @@
   <input type="text" id="approvedBy" oninput="renderPreview()" />
 </div>
 
+<!-- PREVIEW & PRINT -->
 <div class="container">
+
+<div class="logo">
+  <img src="https://via.placeholder.com/200x80?text=Company+Logo" alt="Company Logo" />
+</div>
+
 <h2>REQUEST FOR OVERTIME</h2>
 
 <table>
@@ -160,6 +181,21 @@
 </div>
 
 <script>
+function formatTime(time24) {
+  if (!time24) return "";
+  let [hours, minutes] = time24.split(":");
+  hours = parseInt(hours);
+  const ampm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12 || 12;
+  return `${hours}:${minutes} ${ampm}`;
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return "";
+  const [year, month, day] = dateStr.split("-");
+  return `${month}/${day}/${year}`;
+}
+
 function addOTRow() {
   const container = document.getElementById("otContainer");
 
@@ -186,19 +222,10 @@ function addOTRow() {
   container.appendChild(div);
 }
 
-function formatTime(time24) {
-  if (!time24) return "";
-  let [hours, minutes] = time24.split(":");
-  hours = parseInt(hours);
-  const ampm = hours >= 12 ? "PM" : "AM";
-  hours = hours % 12 || 12;
-  return `${hours}:${minutes} ${ampm}`;
-}
-
 function renderPreview() {
   document.getElementById("v_empName").textContent = document.getElementById("empName").value;
   document.getElementById("v_empName2").textContent = document.getElementById("empName").value;
-  document.getElementById("v_dateFiled").textContent = document.getElementById("dateFiled").value;
+  document.getElementById("v_dateFiled").textContent = formatDate(document.getElementById("dateFiled").value);
   document.getElementById("v_supervisor").textContent = document.getElementById("supervisor").value;
   document.getElementById("v_hrDept").textContent = document.getElementById("hrDept").value;
   document.getElementById("v_approvedBy").textContent = document.getElementById("approvedBy").value;
@@ -208,7 +235,7 @@ function renderPreview() {
   preview.innerHTML = "";
 
   rows.forEach(row => {
-    const date = row.querySelector(".otDate").value;
+    const date = formatDate(row.querySelector(".otDate").value);
     const from = formatTime(row.querySelector(".timeFrom").value);
     const to = formatTime(row.querySelector(".timeTo").value);
     const reason = row.querySelector(".reason").value;
@@ -227,7 +254,6 @@ function renderPreview() {
   });
 }
 
-// Start with one OT row
 addOTRow();
 </script>
 
