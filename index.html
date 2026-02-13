@@ -12,6 +12,21 @@
     padding: 20px;
   }
 
+  .form-entry {
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+
+  .form-entry input, .form-entry textarea {
+    width: 100%;
+    padding: 6px;
+    margin-bottom: 10px;
+  }
+
   .container {
     max-width: 900px;
     margin: auto;
@@ -45,31 +60,14 @@
     text-align: center;
   }
 
-  input, textarea {
-    width: 100%;
-    border: none;
-    outline: none;
-    font-family: inherit;
-    font-size: 14px;
-  }
-
-  textarea {
-    resize: none;
-  }
-
-  .sign {
-    margin-top: 40px;
-  }
-
-  .print-btn {
-    margin-top: 20px;
+  .print-btn, .generate-btn {
+    margin-top: 15px;
     padding: 10px 20px;
-    font-size: 16px;
     cursor: pointer;
   }
 
   @media print {
-    .print-btn {
+    .form-entry, .print-btn, .generate-btn {
       display: none;
     }
 
@@ -87,14 +85,55 @@
 
 <body>
 
-<div class="container">
+<!-- ENTRY FORM -->
+<div class="form-entry">
+  <h3>Overtime Entry Form</h3>
+
+  <label>Employee Name</label>
+  <input type="text" id="empName" />
+
+  <label>Employee Position</label>
+  <input type="text" id="empPosition" />
+
+  <label>Date Filed</label>
+  <input type="date" id="dateFiled" />
+
+  <label>Date of Overtime</label>
+  <input type="date" id="otDate" />
+
+  <label>Time From</label>
+  <input type="time" id="timeFrom" />
+
+  <label>Time To</label>
+  <input type="time" id="timeTo" />
+
+  <label>Reason for Overtime</label>
+  <textarea id="reason"></textarea>
+
+  <label>Remarks</label>
+  <textarea id="remarks"></textarea>
+
+  <label>Immediate Supervisor</label>
+  <input type="text" id="supervisor" />
+
+  <label>HR Department</label>
+  <input type="text" id="hrDept" />
+
+  <label>Approved By</label>
+  <input type="text" id="approvedBy" />
+
+  <button class="generate-btn" onclick="generateForm()">Generate Form</button>
+</div>
+
+<!-- PRINT VIEW -->
+<div class="container" id="printArea">
 
 <h2>REQUEST FOR OVERTIME</h2>
 
 <table>
 <tr>
-  <td width="50%"><b>Name of Employee:</b> <input type="text" /></td>
-  <td><b>Date Filed:</b> <input type="date" /></td>
+  <td width="50%"><b>Name of Employee:</b> <span id="v_empName"></span></td>
+  <td><b>Date Filed:</b> <span id="v_dateFiled"></span></td>
 </tr>
 </table>
 
@@ -111,35 +150,35 @@
 </tr>
 
 <tr style="height:120px;">
-  <td><input type="date" /></td>
-  <td><input type="time" /></td>
-  <td><input type="time" /></td>
-  <td><textarea rows="5"></textarea></td>
-  <td><textarea rows="5"></textarea></td>
+  <td id="v_otDate"></td>
+  <td id="v_timeFrom"></td>
+  <td id="v_timeTo"></td>
+  <td id="v_reason"></td>
+  <td id="v_remarks"></td>
 </tr>
 </table>
 
-<table class="sign">
+<table style="margin-top:40px;">
 <tr>
   <td width="50%">
     <b>Requested by:</b><br><br>
-    <input type="text" placeholder="Employee Name" />
-    <input type="text" placeholder="Employee Position" />
+    <span id="v_empName2"></span><br>
+    <div class="center" id="v_empPosition"></div>
   </td>
   <td>
     <b>Immediate Supervisor:</b><br><br>
-    <input type="text" />
+    <span id="v_supervisor"></span>
   </td>
 </tr>
 
 <tr>
   <td>
     <b>Approved by:</b><br><br>
-    <input type="text" placeholder="President/CEO" />
+    <span id="v_approvedBy"></span>
   </td>
   <td>
     <b>HR Department:</b><br><br>
-    <input type="text" />
+    <span id="v_hrDept"></span>
   </td>
 </tr>
 </table>
@@ -147,6 +186,23 @@
 <button class="print-btn" onclick="window.print()">Print Form</button>
 
 </div>
+
+<script>
+function generateForm() {
+  document.getElementById("v_empName").textContent = document.getElementById("empName").value;
+  document.getElementById("v_empName2").textContent = document.getElementById("empName").value;
+  document.getElementById("v_empPosition").textContent = document.getElementById("empPosition").value;
+  document.getElementById("v_dateFiled").textContent = document.getElementById("dateFiled").value;
+  document.getElementById("v_otDate").textContent = document.getElementById("otDate").value;
+  document.getElementById("v_timeFrom").textContent = document.getElementById("timeFrom").value;
+  document.getElementById("v_timeTo").textContent = document.getElementById("timeTo").value;
+  document.getElementById("v_reason").textContent = document.getElementById("reason").value;
+  document.getElementById("v_remarks").textContent = document.getElementById("remarks").value;
+  document.getElementById("v_supervisor").textContent = document.getElementById("supervisor").value;
+  document.getElementById("v_hrDept").textContent = document.getElementById("hrDept").value;
+  document.getElementById("v_approvedBy").textContent = document.getElementById("approvedBy").value;
+}
+</script>
 
 </body>
 </html>
