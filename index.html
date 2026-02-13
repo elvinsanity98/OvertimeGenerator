@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Professional OT Request Tool</title>
+    <style>
+        body { font-family: 'Times New Roman', serif; background: #eceff1; margin: 0; padding: 20px; }
+        
+        /* Dashboard Styling */
+        .no-print { 
+            max-width: 800px; margin: 0 auto 20px auto; background: #fff; 
+            padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-top: 5px solid #0056b3;
+        }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .input-group { display: flex; flex-direction: column; }
+        label { font-size: 13px; font-weight: bold; color: #444; margin-bottom: 6px; text-transform: uppercase; }
+        input, textarea { padding: 10px; border: 1px solid #bdc3c7; border-radius: 6px; font-size: 14px; }
+        input:focus { border-color: #0056b3; outline: none; box-shadow: 0 0 5px rgba(0,86,179,0.2); }
+        .full-width { grid-column: span 2; }
+        button { 
+            grid-column: span 2; padding: 15px; background: #27ae60; color: white; 
+            border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 10px;
+        }
+        button:hover { background: #219150; }
+
+        /* Print Layout Styling */
+        #paper { 
+            width: 210mm; min-height: 297mm; background: white; margin: auto; padding: 20mm; 
+            box-sizing: border-box; display: block; box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header { text-align: center; border-bottom: 2px solid #000; margin-bottom: 40px; padding-bottom: 10px; }
+        .header h1 { margin: 0; letter-spacing: 2px; font-size: 24px; }
+
+        .top-info { width: 100%; margin-bottom: 30px; border-collapse: collapse; }
+        .top-info td { padding: 10px 0; font-size: 16px; }
