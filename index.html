@@ -186,6 +186,15 @@ function addOTRow() {
   container.appendChild(div);
 }
 
+function formatTime(time24) {
+  if (!time24) return "";
+  let [hours, minutes] = time24.split(":");
+  hours = parseInt(hours);
+  const ampm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12 || 12;
+  return `${hours}:${minutes} ${ampm}`;
+}
+
 function renderPreview() {
   document.getElementById("v_empName").textContent = document.getElementById("empName").value;
   document.getElementById("v_empName2").textContent = document.getElementById("empName").value;
@@ -200,8 +209,8 @@ function renderPreview() {
 
   rows.forEach(row => {
     const date = row.querySelector(".otDate").value;
-    const from = row.querySelector(".timeFrom").value;
-    const to = row.querySelector(".timeTo").value;
+    const from = formatTime(row.querySelector(".timeFrom").value);
+    const to = formatTime(row.querySelector(".timeTo").value);
     const reason = row.querySelector(".reason").value;
     const remarks = row.querySelector(".remarks").value;
 
