@@ -4,6 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Overtime Request Form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after {
@@ -16,9 +18,10 @@
     min-height: 100vh;
     padding: 30px 20px;
     color: #e0e8f0;
+    margin: 0;
   }
 
-  /* ===== MODERN ENTRY FORM ===== */
+  /* ===== ENTRY FORM ===== */
   .form-entry {
     max-width: 900px;
     margin: 0 auto 40px auto;
@@ -37,7 +40,7 @@
   }
 
   .form-entry::before {
-    content: '';
+    content: "";
     position: absolute;
     top: -50%;
     left: -50%;
@@ -80,7 +83,7 @@
   }
 
   .form-entry h3::after {
-    content: '';
+    content: "";
     display: block;
     width: 60px;
     height: 3px;
@@ -252,11 +255,6 @@
     box-shadow: 0 2px 8px rgba(26, 127, 212, 0.25);
   }
 
-  .add-btn .icon {
-    font-size: 1.2rem;
-    line-height: 1;
-  }
-
   .print-btn {
     display: inline-flex;
     align-items: center;
@@ -287,10 +285,6 @@
     transform: translateY(0);
   }
 
-  .print-btn .icon {
-    font-size: 1.1rem;
-  }
-
   /* ===== SECTION DIVIDER ===== */
   .section-divider {
     position: relative;
@@ -301,7 +295,7 @@
     margin: 8px 0 24px;
   }
 
-  /* ===== PREVIEW SECTION (kept original for print) ===== */
+  /* ===== PREVIEW CONTAINER (original for print) ===== */
   .container {
     max-width: 900px;
     margin: 0 auto;
@@ -321,6 +315,7 @@
 
   .container .logo img {
     height: 80px;
+    filter: none;
   }
 
   .container h2 {
@@ -328,6 +323,10 @@
     margin-bottom: 20px;
     color: #000;
     font-family: "Times New Roman", serif;
+    -webkit-text-fill-color: #000;
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
   }
 
   .container table {
@@ -350,7 +349,7 @@
     color: #000;
   }
 
-  /* ===== PREVIEW LABEL BADGE ===== */
+  /* ===== PREVIEW LABEL ===== */
   .preview-label {
     text-align: center;
     margin-bottom: 16px;
@@ -371,7 +370,6 @@
     border-radius: 20px;
   }
 
-  /* ===== FIELD GROUPS ===== */
   .field-group {
     position: relative;
     z-index: 1;
@@ -388,29 +386,29 @@
     }
   }
 
-  /* ===== PRINT STYLES (unchanged) ===== */
+  /* ===== PRINT (unchanged) ===== */
   @media print {
     .form-entry, .add-btn, .print-btn, .preview-label {
-      display: none;
+      display: none !important;
     }
     body {
-      background: white;
-      padding: 0;
-      font-family: "Times New Roman", serif;
-      color: #000;
+      background: white !important;
+      padding: 0 !important;
+      font-family: "Times New Roman", serif !important;
+      color: #000 !important;
     }
     .container {
-      border: none;
-      padding: 0;
-      box-shadow: none;
-      border-radius: 0;
+      border: none !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
     }
   }
 </style>
 </head>
 <body>
 
-<!-- ENTRY FORM (MODERNIZED - BLUE THEME) -->
+<!-- ENTRY FORM -->
 <div class="form-entry">
   <div class="logo">
     <img src="RBLI Logo Horizontal.png" alt="Company Logo" />
@@ -431,9 +429,7 @@
 
   <div id="otContainer"></div>
 
-  <button class="add-btn" onclick="addOTRow()">
-    <span class="icon">＋</span> Add Overtime Entry
-  </button>
+  <button type="button" class="add-btn" onclick="addOTRow()">+ Add Overtime Entry</button>
 
   <hr class="section-divider" />
 
@@ -455,10 +451,10 @@
 
 <!-- PREVIEW LABEL -->
 <div class="preview-label">
-  <span>📄 Print Preview</span>
+  <span>Print Preview</span>
 </div>
 
-<!-- PREVIEW & PRINT (UNCHANGED LAYOUT) -->
+<!-- PREVIEW & PRINT (UNCHANGED) -->
 <div class="container">
   <div class="logo">
     <img src="RBLI Logo Horizontal.png" alt="Company Logo" />
@@ -489,99 +485,97 @@
   <table style="margin-top:40px;">
     <tr>
       <td width="50%">
-        <b>Requested by:</b><br><br>
+        <b>Requested by:</b><br /><br />
         <span id="v_empName2"></span>
       </td>
       <td>
-        <b>Immediate Supervisor:</b><br><br>
+        <b>Immediate Supervisor:</b><br /><br />
         <span id="v_supervisor"></span>
       </td>
     </tr>
     <tr>
       <td>
-        <b>Approved by:</b><br><br>
+        <b>Approved by:</b><br /><br />
         <span id="v_approvedBy"></span>
       </td>
       <td>
-        <b>HR Department:</b><br><br>
+        <b>HR Department:</b><br /><br />
         <span id="v_hrDept"></span>
       </td>
     </tr>
   </table>
 
-  <button class="print-btn" onclick="window.print()">
-    <span class="icon">🖨</span> Print Form
-  </button>
+  <button type="button" class="print-btn" onclick="window.print()">Print Form</button>
 </div>
 
 <script>
-let rowCounter = 0;
+var rowCounter = 0;
 
 function formatTime(time24) {
   if (!time24) return "";
-  let [hours, minutes] = time24.split(":");
-  hours = parseInt(hours);
-  const ampm = hours >= 12 ? "PM" : "AM";
-  hours = hours % 12 || 12;
-  return `${hours}:${minutes} ${ampm}`;
+  var parts = time24.split(":");
+  var hours = parseInt(parts[0], 10);
+  var minutes = parts[1];
+  var ampm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12;
+  if (hours === 0) hours = 12;
+  return hours + ":" + minutes + " " + ampm;
 }
 
 function formatDate(dateStr) {
   if (!dateStr) return "";
-  const [year, month, day] = dateStr.split("-");
-  return `${month}/${day}/${year}`;
+  var parts = dateStr.split("-");
+  return parts[1] + "/" + parts[2] + "/" + parts[0];
 }
 
 function addOTRow() {
   rowCounter++;
-  const container = document.getElementById("otContainer");
-  const div = document.createElement("div");
+  var container = document.getElementById("otContainer");
+  var div = document.createElement("div");
   div.className = "ot-row";
-  const currentNum = rowCounter;
-  div.innerHTML = `
-    <div class="row-header">
-      <span class="row-number">Overtime #${currentNum}</span>
-      <button class="remove-btn" onclick="removeOTRow(this)">✕ Remove</button>
-    </div>
-    <label>Date of Overtime</label>
-    <input type="date" class="otDate" oninput="renderPreview()" />
-    <div class="time-group">
-      <div>
-        <label>Time From</label>
-        <input type="time" class="timeFrom" oninput="renderPreview()" />
-      </div>
-      <div>
-        <label>Time To</label>
-        <input type="time" class="timeTo" oninput="renderPreview()" />
-      </div>
-    </div>
-    <label>Reason</label>
-    <textarea class="reason" placeholder="Describe reason for overtime..." oninput="renderPreview()"></textarea>
-    <label>Remarks</label>
-    <textarea class="remarks" placeholder="Additional remarks..." oninput="renderPreview()"></textarea>
-  `;
+  div.innerHTML =
+    '<div class="row-header">' +
+      '<span class="row-number">Overtime #' + rowCounter + '</span>' +
+      '<button type="button" class="remove-btn" onclick="removeOTRow(this)">X Remove</button>' +
+    '</div>' +
+    '<label>Date of Overtime</label>' +
+    '<input type="date" class="otDate" oninput="renderPreview()" />' +
+    '<div class="time-group">' +
+      '<div>' +
+        '<label>Time From</label>' +
+        '<input type="time" class="timeFrom" oninput="renderPreview()" />' +
+      '</div>' +
+      '<div>' +
+        '<label>Time To</label>' +
+        '<input type="time" class="timeTo" oninput="renderPreview()" />' +
+      '</div>' +
+    '</div>' +
+    '<label>Reason</label>' +
+    '<textarea class="reason" placeholder="Describe reason for overtime..." oninput="renderPreview()"></textarea>' +
+    '<label>Remarks</label>' +
+    '<textarea class="remarks" placeholder="Additional remarks..." oninput="renderPreview()"></textarea>';
   container.appendChild(div);
   renderPreview();
 }
 
 function removeOTRow(btn) {
-  const row = btn.closest('.ot-row');
-  row.style.opacity = '0';
-  row.style.transform = 'translateY(-10px) scale(0.97)';
-  row.style.transition = 'all 0.25s ease';
-  setTimeout(() => {
-    row.remove();
+  var row = btn.closest(".ot-row");
+  row.style.opacity = "0";
+  row.style.transform = "translateY(-10px) scale(0.97)";
+  row.style.transition = "all 0.25s ease";
+  setTimeout(function() {
+    row.parentNode.removeChild(row);
     renumberRows();
     renderPreview();
   }, 250);
 }
 
 function renumberRows() {
-  const rows = document.querySelectorAll('.ot-row');
-  rows.forEach((row, i) => {
-    const badge = row.querySelector('.row-number');
-    if (badge) badge.textContent = `Overtime #${i + 1}`;
-  });
+  var rows = document.querySelectorAll(".ot-row");
+  for (var i = 0; i < rows.length; i++) {
+    var badge = rows[i].querySelector(".row-number");
+    if (badge) badge.textContent = "Overtime #" + (i + 1);
+  }
   rowCounter = rows.length;
 }
 
@@ -593,27 +587,37 @@ function renderPreview() {
   document.getElementById("v_hrDept").textContent = document.getElementById("hrDept").value;
   document.getElementById("v_approvedBy").textContent = document.getElementById("approvedBy").value;
 
-  const rows = document.querySelectorAll(".ot-row");
-  const preview = document.getElementById("previewRows");
+  var rows = document.querySelectorAll(".ot-row");
+  var preview = document.getElementById("previewRows");
   preview.innerHTML = "";
 
-  rows.forEach(row => {
-    const date = formatDate(row.querySelector(".otDate").value);
-    const from = formatTime(row.querySelector(".timeFrom").value);
-    const to = formatTime(row.querySelector(".timeTo").value);
-    const reason = row.querySelector(".reason").value;
-    const remarks = row.querySelector(".remarks").value;
+  for (var i = 0; i < rows.length; i++) {
+    var row = rows[i];
+    var date = formatDate(row.querySelector(".otDate").value);
+    var from = formatTime(row.querySelector(".timeFrom").value);
+    var to = formatTime(row.querySelector(".timeTo").value);
+    var reason = row.querySelector(".reason").value;
+    var remarks = row.querySelector(".remarks").value;
 
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${date}</td>
-      <td>${from}</td>
-      <td>${to}</td>
-      <td>${reason}</td>
-      <td>${remarks}</td>
-    `;
+    var tr = document.createElement("tr");
+    var td1 = document.createElement("td");
+    td1.textContent = date;
+    var td2 = document.createElement("td");
+    td2.textContent = from;
+    var td3 = document.createElement("td");
+    td3.textContent = to;
+    var td4 = document.createElement("td");
+    td4.textContent = reason;
+    var td5 = document.createElement("td");
+    td5.textContent = remarks;
+
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+    tr.appendChild(td4);
+    tr.appendChild(td5);
     preview.appendChild(tr);
-  });
+  }
 }
 
 addOTRow();
