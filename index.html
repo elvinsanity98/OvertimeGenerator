@@ -4,579 +4,222 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Overtime Request Form</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-
   body {
-    font-family: "Inter", sans-serif;
-    background: linear-gradient(135deg, #0a1628, #0d2137, #0f2d4d);
-    min-height: 100vh;
-    padding: 30px 20px;
-    color: #e0e8f0;
-    margin: 0;
-  }
-
-  /* ===== ENTRY FORM ===== */
-  .form-entry {
-    max-width: 900px;
-    margin: 0 auto 40px auto;
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 24px;
-    padding: 40px 36px;
-    box-shadow:
-      0 25px 60px rgba(0, 0, 0, 0.5),
-      0 0 80px rgba(56, 152, 236, 0.06),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .form-entry::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at 30% 20%, rgba(56, 152, 236, 0.06) 0%, transparent 50%),
-                radial-gradient(circle at 70% 80%, rgba(14, 116, 206, 0.04) 0%, transparent 50%);
-    pointer-events: none;
-  }
-
-  .form-entry .logo {
-    text-align: center;
-    margin-bottom: 8px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .form-entry .logo img {
-    height: 80px;
-    filter: brightness(1.1) drop-shadow(0 4px 12px rgba(0,0,0,0.3));
-    transition: transform 0.3s ease;
-  }
-
-  .form-entry .logo img:hover {
-    transform: scale(1.05);
-  }
-
-  .form-entry h3 {
-    text-align: center;
-    font-size: 1.6rem;
-    font-weight: 700;
-    margin: 0 0 28px 0;
-    background: linear-gradient(135deg, #7ec8f8, #3b9ee6, #1a7fd4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: -0.02em;
-    position: relative;
-    z-index: 1;
-  }
-
-  .form-entry h3::after {
-    content: "";
-    display: block;
-    width: 60px;
-    height: 3px;
-    background: linear-gradient(90deg, #1a7fd4, #7ec8f8);
-    margin: 12px auto 0;
-    border-radius: 3px;
-  }
-
-  .form-entry label {
-    display: block;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #7eb8e0;
-    margin-bottom: 6px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .form-entry input[type="text"],
-  .form-entry input[type="date"],
-  .form-entry input[type="time"],
-  .form-entry textarea {
-    width: 100%;
-    padding: 12px 16px;
-    margin-bottom: 18px;
-    font-family: "Inter", sans-serif;
-    font-size: 0.95rem;
-    color: #eaf2f8;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    border-radius: 12px;
-    outline: none;
-    transition: all 0.3s ease;
-    position: relative;
-    z-index: 1;
-  }
-
-  .form-entry input[type="text"]:focus,
-  .form-entry input[type="date"]:focus,
-  .form-entry input[type="time"]:focus,
-  .form-entry textarea:focus {
-    border-color: #2b8fd6;
-    background: rgba(43, 143, 214, 0.08);
-    box-shadow: 0 0 0 3px rgba(43, 143, 214, 0.15), 0 4px 12px rgba(0,0,0,0.2);
-  }
-
-  .form-entry input[type="text"]:hover,
-  .form-entry input[type="date"]:hover,
-  .form-entry input[type="time"]:hover,
-  .form-entry textarea:hover {
-    border-color: rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.07);
-  }
-
-  .form-entry textarea {
-    resize: vertical;
-    min-height: 70px;
-  }
-
-  .form-entry input[type="date"]::-webkit-calendar-picker-indicator,
-  .form-entry input[type="time"]::-webkit-calendar-picker-indicator {
-    filter: invert(0.65) sepia(1) saturate(4) hue-rotate(175deg);
-    cursor: pointer;
-  }
-
-  /* ===== OT ROW CARDS ===== */
-  .ot-row {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 16px;
-    padding: 20px 20px 4px;
-    margin-bottom: 16px;
-    position: relative;
-    z-index: 1;
-    transition: all 0.3s ease;
-    animation: slideIn 0.35s ease-out;
-  }
-
-  @keyframes slideIn {
-    from {
-      opacity: 0;
-      transform: translateY(-16px) scale(0.97);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
-
-  .ot-row:hover {
-    border-color: rgba(43, 143, 214, 0.25);
-    background: rgba(255, 255, 255, 0.05);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-  }
-
-  .ot-row .row-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-  }
-
-  .ot-row .row-number {
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #5cb3f0;
-    background: rgba(43, 143, 214, 0.12);
-    padding: 4px 12px;
-    border-radius: 20px;
-  }
-
-  .ot-row .remove-btn {
-    background: rgba(239, 68, 68, 0.08);
-    border: 1px solid rgba(239, 68, 68, 0.18);
-    color: #f87171;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 4px 14px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .ot-row .remove-btn:hover {
-    background: rgba(239, 68, 68, 0.22);
-    border-color: rgba(239, 68, 68, 0.4);
-    transform: scale(1.05);
-  }
-
-  .ot-row .time-group {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  /* ===== BUTTONS ===== */
-  .add-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin: 8px 0 28px;
-    padding: 12px 24px;
-    font-family: "Inter", sans-serif;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #fff;
-    background: linear-gradient(135deg, #1a7fd4, #2b8fd6);
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 16px rgba(26, 127, 212, 0.3);
-    position: relative;
-    z-index: 1;
-  }
-
-  .add-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(26, 127, 212, 0.45);
-    background: linear-gradient(135deg, #2b8fd6, #5cb3f0);
-  }
-
-  .add-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(26, 127, 212, 0.25);
-  }
-
-  .print-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 24px;
-    padding: 14px 32px;
-    font-family: "Inter", sans-serif;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #fff;
-    background: linear-gradient(135deg, #0e74ce, #1565b8);
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 16px rgba(14, 116, 206, 0.3);
-    position: relative;
-    z-index: 1;
-  }
-
-  .print-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(14, 116, 206, 0.45);
-    background: linear-gradient(135deg, #1a7fd4, #2b8fd6);
-  }
-
-  .print-btn:active {
-    transform: translateY(0);
-  }
-
-  /* ===== SECTION DIVIDER ===== */
-  .section-divider {
-    position: relative;
-    z-index: 1;
-    border: none;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(126, 200, 248, 0.15), transparent);
-    margin: 8px 0 24px;
-  }
-
-  /* ===== PREVIEW CONTAINER (original for print) ===== */
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    background: white;
-    padding: 30px;
-    border: 1px solid #ccc;
     font-family: "Times New Roman", serif;
-    color: #000;
-    border-radius: 4px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+    background: #f5f5f5;
+    padding: 20px;
   }
 
-  .container .logo {
+  .logo {
     text-align: center;
     margin-bottom: 10px;
   }
 
-  .container .logo img {
+  .logo img {
     height: 80px;
-    filter: none;
   }
 
-  .container h2 {
+  .form-entry {
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+
+  .form-entry input, .form-entry textarea {
+    width: 100%;
+    padding: 6px;
+    margin-bottom: 10px;
+  }
+
+  .ot-row {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .add-btn, .print-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border: 1px solid #ccc;
+  }
+
+  h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #000;
-    font-family: "Times New Roman", serif;
-    -webkit-text-fill-color: #000;
-    background: none;
-    -webkit-background-clip: unset;
-    background-clip: unset;
   }
 
-  .container table {
+  table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
   }
 
-  .container table,
-  .container th,
-  .container td {
+  table, th, td {
     border: 1px solid black;
   }
 
-  .container th,
-  .container td {
+  th, td {
     padding: 8px;
     vertical-align: top;
-    font-family: "Times New Roman", serif;
-    color: #000;
   }
 
-  /* ===== PREVIEW LABEL ===== */
-  .preview-label {
-    text-align: center;
-    margin-bottom: 16px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .preview-label span {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: #7eb8e0;
-    background: rgba(43, 143, 214, 0.08);
-    border: 1px solid rgba(43, 143, 214, 0.15);
-    padding: 6px 20px;
-    border-radius: 20px;
-  }
-
-  .field-group {
-    position: relative;
-    z-index: 1;
-  }
-
-  /* ===== RESPONSIVE ===== */
-  @media (max-width: 600px) {
-    .form-entry {
-      padding: 24px 18px;
-      border-radius: 18px;
-    }
-    .ot-row .time-group {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  /* ===== PRINT (unchanged) ===== */
   @media print {
-    .form-entry, .add-btn, .print-btn, .preview-label {
-      display: none !important;
+    .form-entry, .add-btn, .print-btn {
+      display: none;
     }
+
     body {
-      background: white !important;
-      padding: 0 !important;
-      font-family: "Times New Roman", serif !important;
-      color: #000 !important;
+      background: white;
     }
+
     .container {
-      border: none !important;
-      padding: 0 !important;
-      box-shadow: none !important;
-      border-radius: 0 !important;
+      border: none;
+      padding: 0;
     }
   }
 </style>
 </head>
+
 <body>
 
 <!-- ENTRY FORM -->
 <div class="form-entry">
+
   <div class="logo">
     <img src="RBLI Logo Horizontal.png" alt="Company Logo" />
   </div>
+
   <h3>Overtime Entry Form</h3>
 
-  <div class="field-group">
-    <label>Employee Name</label>
-    <input type="text" id="empName" placeholder="Enter full name..." oninput="renderPreview()" />
-  </div>
+  <label>Employee Name</label>
+  <input type="text" id="empName" oninput="renderPreview()" />
 
-  <div class="field-group">
-    <label>Date Filed</label>
-    <input type="date" id="dateFiled" oninput="renderPreview()" />
-  </div>
-
-  <hr class="section-divider" />
+  <label>Date Filed</label>
+  <input type="date" id="dateFiled" oninput="renderPreview()" />
 
   <div id="otContainer"></div>
 
-  <button type="button" class="add-btn" onclick="addOTRow()">+ Add Overtime Entry</button>
+  <button class="add-btn" onclick="addOTRow()">Add Overtime Date</button>
 
-  <hr class="section-divider" />
+  <label>Immediate Supervisor</label>
+  <input type="text" id="supervisor" oninput="renderPreview()" />
 
-  <div class="field-group">
-    <label>Immediate Supervisor</label>
-    <input type="text" id="supervisor" placeholder="Supervisor name..." oninput="renderPreview()" />
-  </div>
+  <label>HR Department</label>
+  <input type="text" id="hrDept" oninput="renderPreview()" />
 
-  <div class="field-group">
-    <label>HR Department</label>
-    <input type="text" id="hrDept" placeholder="HR representative..." oninput="renderPreview()" />
-  </div>
-
-  <div class="field-group">
-    <label>Approved By</label>
-    <input type="text" id="approvedBy" placeholder="Approver name..." oninput="renderPreview()" />
-  </div>
+  <label>Approved By</label>
+  <input type="text" id="approvedBy" oninput="renderPreview()" />
 </div>
 
-<!-- PREVIEW LABEL -->
-<div class="preview-label">
-  <span>Print Preview</span>
-</div>
-
-<!-- PREVIEW & PRINT (UNCHANGED) -->
+<!-- PREVIEW & PRINT -->
 <div class="container">
-  <div class="logo">
-    <img src="RBLI Logo Horizontal.png" alt="Company Logo" />
-  </div>
 
-  <h2>REQUEST FOR OVERTIME</h2>
+<div class="logo">
+  <img src="RBLI Logo Horizontal.png" alt="Company Logo" />
+</div>
 
-  <table>
-    <tr>
-      <td width="50%"><b>Name of Employee:</b> <span id="v_empName"></span></td>
-      <td><b>Date Filed:</b> <span id="v_dateFiled"></span></td>
-    </tr>
-  </table>
+<h2>REQUEST FOR OVERTIME</h2>
 
-  <table>
-    <thead>
-      <tr>
-        <th width="20%">Date of Overtime</th>
-        <th width="15%">From</th>
-        <th width="15%">To</th>
-        <th>Reasons for rendering Overtime Work</th>
-        <th width="20%">Remarks</th>
-      </tr>
-    </thead>
-    <tbody id="previewRows"></tbody>
-  </table>
+<table>
+<tr>
+  <td width="50%"><b>Name of Employee:</b> <span id="v_empName"></span></td>
+  <td><b>Date Filed:</b> <span id="v_dateFiled"></span></td>
+</tr>
+</table>
 
-  <table style="margin-top:40px;">
-    <tr>
-      <td width="50%">
-        <b>Requested by:</b><br /><br />
-        <span id="v_empName2"></span>
-      </td>
-      <td>
-        <b>Immediate Supervisor:</b><br /><br />
-        <span id="v_supervisor"></span>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <b>Approved by:</b><br /><br />
-        <span id="v_approvedBy"></span>
-      </td>
-      <td>
-        <b>HR Department:</b><br /><br />
-        <span id="v_hrDept"></span>
-      </td>
-    </tr>
-  </table>
+<table>
+<thead>
+<tr>
+  <th width="20%">Date of Overtime</th>
+  <th width="15%">From</th>
+  <th width="15%">To</th>
+  <th>Reasons for rendering Overtime Work</th>
+  <th width="20%">Remarks</th>
+</tr>
+</thead>
+<tbody id="previewRows"></tbody>
+</table>
 
-  <button type="button" class="print-btn" onclick="window.print()">Print Form</button>
+<table style="margin-top:40px;">
+<tr>
+  <td width="50%">
+    <b>Requested by:</b><br><br>
+    <span id="v_empName2"></span>
+  </td>
+  <td>
+    <b>Immediate Supervisor:</b><br><br>
+    <span id="v_supervisor"></span>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <b>Approved by:</b><br><br>
+    <span id="v_approvedBy"></span>
+  </td>
+  <td>
+    <b>HR Department:</b><br><br>
+    <span id="v_hrDept"></span>
+  </td>
+</tr>
+</table>
+
+<button class="print-btn" onclick="window.print()">Print Form</button>
 </div>
 
 <script>
-var rowCounter = 0;
-
 function formatTime(time24) {
   if (!time24) return "";
-  var parts = time24.split(":");
-  var hours = parseInt(parts[0], 10);
-  var minutes = parts[1];
-  var ampm = hours >= 12 ? "PM" : "AM";
-  hours = hours % 12;
-  if (hours === 0) hours = 12;
-  return hours + ":" + minutes + " " + ampm;
+  let [hours, minutes] = time24.split(":");
+  hours = parseInt(hours);
+  const ampm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12 || 12;
+  return `${hours}:${minutes} ${ampm}`;
 }
 
 function formatDate(dateStr) {
   if (!dateStr) return "";
-  var parts = dateStr.split("-");
-  return parts[1] + "/" + parts[2] + "/" + parts[0];
+  const [year, month, day] = dateStr.split("-");
+  return `${month}/${day}/${year}`;
 }
 
 function addOTRow() {
-  rowCounter++;
-  var container = document.getElementById("otContainer");
-  var div = document.createElement("div");
+  const container = document.getElementById("otContainer");
+
+  const div = document.createElement("div");
   div.className = "ot-row";
-  div.innerHTML =
-    '<div class="row-header">' +
-      '<span class="row-number">Overtime #' + rowCounter + '</span>' +
-      '<button type="button" class="remove-btn" onclick="removeOTRow(this)">X Remove</button>' +
-    '</div>' +
-    '<label>Date of Overtime</label>' +
-    '<input type="date" class="otDate" oninput="renderPreview()" />' +
-    '<div class="time-group">' +
-      '<div>' +
-        '<label>Time From</label>' +
-        '<input type="time" class="timeFrom" oninput="renderPreview()" />' +
-      '</div>' +
-      '<div>' +
-        '<label>Time To</label>' +
-        '<input type="time" class="timeTo" oninput="renderPreview()" />' +
-      '</div>' +
-    '</div>' +
-    '<label>Reason</label>' +
-    '<textarea class="reason" placeholder="Describe reason for overtime..." oninput="renderPreview()"></textarea>' +
-    '<label>Remarks</label>' +
-    '<textarea class="remarks" placeholder="Additional remarks..." oninput="renderPreview()"></textarea>';
+
+  div.innerHTML = `
+    <label>Date of Overtime</label>
+    <input type="date" class="otDate" oninput="renderPreview()" />
+
+    <label>Time From</label>
+    <input type="time" class="timeFrom" oninput="renderPreview()" />
+
+    <label>Time To</label>
+    <input type="time" class="timeTo" oninput="renderPreview()" />
+
+    <label>Reason</label>
+    <textarea class="reason" oninput="renderPreview()"></textarea>
+
+    <label>Remarks</label>
+    <textarea class="remarks" oninput="renderPreview()"></textarea>
+  `;
+
   container.appendChild(div);
-  renderPreview();
-}
-
-function removeOTRow(btn) {
-  var row = btn.closest(".ot-row");
-  row.style.opacity = "0";
-  row.style.transform = "translateY(-10px) scale(0.97)";
-  row.style.transition = "all 0.25s ease";
-  setTimeout(function() {
-    row.parentNode.removeChild(row);
-    renumberRows();
-    renderPreview();
-  }, 250);
-}
-
-function renumberRows() {
-  var rows = document.querySelectorAll(".ot-row");
-  for (var i = 0; i < rows.length; i++) {
-    var badge = rows[i].querySelector(".row-number");
-    if (badge) badge.textContent = "Overtime #" + (i + 1);
-  }
-  rowCounter = rows.length;
 }
 
 function renderPreview() {
@@ -587,40 +230,32 @@ function renderPreview() {
   document.getElementById("v_hrDept").textContent = document.getElementById("hrDept").value;
   document.getElementById("v_approvedBy").textContent = document.getElementById("approvedBy").value;
 
-  var rows = document.querySelectorAll(".ot-row");
-  var preview = document.getElementById("previewRows");
+  const rows = document.querySelectorAll(".ot-row");
+  const preview = document.getElementById("previewRows");
   preview.innerHTML = "";
 
-  for (var i = 0; i < rows.length; i++) {
-    var row = rows[i];
-    var date = formatDate(row.querySelector(".otDate").value);
-    var from = formatTime(row.querySelector(".timeFrom").value);
-    var to = formatTime(row.querySelector(".timeTo").value);
-    var reason = row.querySelector(".reason").value;
-    var remarks = row.querySelector(".remarks").value;
+  rows.forEach(row => {
+    const date = formatDate(row.querySelector(".otDate").value);
+    const from = formatTime(row.querySelector(".timeFrom").value);
+    const to = formatTime(row.querySelector(".timeTo").value);
+    const reason = row.querySelector(".reason").value;
+    const remarks = row.querySelector(".remarks").value;
 
-    var tr = document.createElement("tr");
-    var td1 = document.createElement("td");
-    td1.textContent = date;
-    var td2 = document.createElement("td");
-    td2.textContent = from;
-    var td3 = document.createElement("td");
-    td3.textContent = to;
-    var td4 = document.createElement("td");
-    td4.textContent = reason;
-    var td5 = document.createElement("td");
-    td5.textContent = remarks;
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${date}</td>
+      <td>${from}</td>
+      <td>${to}</td>
+      <td>${reason}</td>
+      <td>${remarks}</td>
+    `;
 
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    tr.appendChild(td3);
-    tr.appendChild(td4);
-    tr.appendChild(td5);
     preview.appendChild(tr);
-  }
+  });
 }
 
 addOTRow();
 </script>
+
 </body>
 </html>
